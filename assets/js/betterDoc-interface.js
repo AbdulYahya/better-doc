@@ -11,6 +11,7 @@ $(() => {
   let inputNameSearch = document.getElementById('inline-name');
   let inputKeywordSearch = document.getElementById('inline-keyword');
   let queryContainer = document.getElementById('queryContainer');
+  let results = document.getElementById('results');
   let submitSearch = document.getElementById('submitSearch');
   let warningBox = document.getElementById('warningBox');
 
@@ -29,7 +30,8 @@ $(() => {
         // Submit Search Button
         submitSearch.classList.remove('searchSymptom');
         submitSearch.classList.add('searchDoctor');
-
+        // Hide results
+        results.classList.add('hidden');
       } else if (event.target.id == 'searchSymptom') {
         // Display Keyword form input
         divSymptomSearch.classList.remove('hidden');
@@ -40,6 +42,8 @@ $(() => {
         // Submit Search Button
         submitSearch.classList.remove('searchDoctor');
         submitSearch.classList.add('searchSymptom');
+        // Hide results
+        results.classList.add('hidden');
       }
     }
   });
@@ -51,6 +55,7 @@ $(() => {
     if (submitSearch.matches('button.searchDoctor')) {
       let input = $('#inline-name').val();
       $('#inline-name').val('');
+      $('#results').removeClass('hidden');
 
       betterDoc.request('name', input).then(function(response) {
         let body = JSON.parse(response);
@@ -58,6 +63,7 @@ $(() => {
 
         if (doctors) {
           for (let i = 0; i < body.data.length; i++) {
+            queryContainer.classList.remove('hidden');
             form.classList.add('hidden');
             $('#results').append('<div class="max-w-md w-full my-auto lg:flex">' +
                                     `<div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('${doctors.name[i].profile.image_url}')" title="Picture of the Doctor"></div>` +
@@ -79,10 +85,11 @@ $(() => {
           }
         }
       });
-    } else if (submitSearch.matches('button.searchSymptom')) {
 
+    } else if (submitSearch.matches('button.searchSymptom')) {
       let keyword = $('#inline-keyword').val();
       $('#inline-keyword').val('');
+      $('#results').removeClass('hidden');
 
       betterDoc.request('keyword', keyword).then((response) => {
         let body = JSON.parse(response);
@@ -90,6 +97,7 @@ $(() => {
 
         if (doctors) {
           for (let i = 0; i < body.data.length; i++) {
+            queryContainer.classList.remove('hidden');
             form.classList.add('hidden');
             $('#results').append('<div class="max-w-md w-full my-auto lg:flex">' +
                                     `<div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('${doctors.keyword[i].profile.image_url}')" title="Picture of the Doctor"></div>` +
