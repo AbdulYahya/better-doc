@@ -50,7 +50,6 @@ $(() => {
 
   docForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    let doctors;
 
     if (submitSearch.matches('button.searchDoctor')) {
       let input = $('#inline-name').val();
@@ -59,16 +58,18 @@ $(() => {
 
       betterDoc.request('name', input).then(function(response) {
         let body = JSON.parse(response);
+        let doctors = null;
         doctors = betterDoc.searchResult('name', body);
 
         if (doctors) {
           for (let i = 0; i < body.data.length; i++) {
             queryContainer.classList.remove('hidden');
             form.classList.add('hidden');
+
             $('#results').append('<div class="max-w-md w-full my-auto lg:flex">' +
                                     `<div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('${doctors.name[i].profile.image_url}')" title="Picture of the Doctor"></div>` +
                                     '<div class="border-r border-b border-l border-grey-light lg:border-l-0 lg:border-t lg:border-grey-light bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">' +
-                                      '<div class="mb-8">' +
+                                      `<div id=${i}-id class="mb-8">` +
                                         '<p class="text-sm text-grey-dark flex items-center">' +
                                           '<svg class="fill-current text-grey w-3 h-3 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">' +
                                             '<path d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" />' +
@@ -82,6 +83,12 @@ $(() => {
                                       '</div>' +
                                     '</div>' +
                                   '</div>');
+
+            if (doctors.name[i].practices[0].website) {
+              $(`#${i}-id`).append(`<p class="text-grey-darker text-base">Website: <a href="${doctors.name[i].practices[0].website}">Click me</a></p>`);
+            } else {
+              $(`#${i}-id`).append('<p class="text-grey-darker text-base">No website available</p>');
+            }
           }
         }
       });
@@ -93,6 +100,7 @@ $(() => {
 
       betterDoc.request('keyword', keyword).then((response) => {
         let body = JSON.parse(response);
+        let doctors = null;
         doctors = betterDoc.searchResult('keyword', body);
 
         if (doctors) {
@@ -102,7 +110,7 @@ $(() => {
             $('#results').append('<div class="max-w-md w-full my-auto lg:flex">' +
                                     `<div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('${doctors.keyword[i].profile.image_url}')" title="Picture of the Doctor"></div>` +
                                     '<div class="border-r border-b border-l border-grey-light lg:border-l-0 lg:border-t lg:border-grey-light bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">' +
-                                      '<div class="mb-8">' +
+                                      `<div id=${i}-id class="mb-8">` +
                                         '<p class="text-sm text-grey-dark flex items-center">' +
                                           '<svg class="fill-current text-grey w-3 h-3 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">' +
                                             '<path d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" />' +
@@ -116,6 +124,11 @@ $(() => {
                                       '</div>' +
                                     '</div>' +
                                   '</div>');
+            if (doctors.keyword[i].practices[0].website) {
+              $(`#${i}-id`).append(`<p class="text-grey-darker text-base">Website: <a href="${doctors.keyword[i].practices[0].website}">Click me</a></p>`);
+            } else {
+              $(`#${i}-id`).append('<p class="text-grey-darker text-base">No website available</p>');
+            }
           }
         }
       });
