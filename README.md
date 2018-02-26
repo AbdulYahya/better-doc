@@ -12,7 +12,18 @@
 ## Basic Overview
 
 
+<!-- ******NOTES******
+  Move betterDoc.request('name', input).then(function(response) { } from
+   betterDoc-interface to betterDoc and make the submit event listener ASYNC to make it wait for the promise
+   to return
+ -->
 
+
+<!-- TO-DO's
+    * Brief Overview
+    * API Key Instructions
+    * Refactor JS (Further separate UI from Backend Logic)
+-->
 
 ## Install
 
@@ -41,6 +52,7 @@ Now, just run this gulp task:
 ```sh
 $ gulp serve --prod
 ```
+<!-- API Key Instructions Go Here -->
 
 > :bell: Note
 
