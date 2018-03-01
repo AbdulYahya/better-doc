@@ -21,13 +21,18 @@
 
 <!-- TO-DO's
     * Brief Overview
-    * API Key Instructions
     * Refactor JS (Further separate UI from Backend Logic)
 -->
 
+## BetterDoctor API Key
+
+First and foremost, you will need a BetterDoctor API key. Sign up for an account [here](https://developer.betterdoctor.com/signup). <br />
+
+Once you are signed up, your API key will be located on the top right corner of your [dashboard](https://developer.betterdoctor.com/). <br />
+
 ## Install
 
-First, clone this repo:
+To clone this repo:
 
 ```sh
 $ git clone https://github.com/AbdulYahya/better-doc.git
@@ -47,28 +52,21 @@ Install all npm and bower package:
 $ npm install && bower install
 ```
 
+Please find and open the '.env' file located under the project's root directory. You will need to edit this file and replace the placeholder text `YOUR_API_KEY_GOES_HERE` with your new BetterDoctor API key:
+
+> If you didn't signup for an API key, please follow the steps from 'BetterDoctor API Key' section above.<br />
+> :bangbang: Place your key *inside* of the quotes
+
+```js
+exports.apiKey="YOUR_API_KEY_GOES_HERE"
+```
+
+
 Now, just run this gulp task:
 
 ```sh
 $ gulp serve --prod
 ```
-<!-- API Key Instructions Go Here -->
-
-> :bell: Note
-
-> Commands denoted by :construction: are currently not available, but will be in the very near future.
-
-|  |  | Description |
-| :------------- | :------------- | :------------- |
-| :construction: | :construction: | :construction: |        
-| :construction: | :construction: | :construction: |
-| :construction: | :construction: | :construction: |
-
-
-----
-
-###### :bangbang:
-
 
 ## License
 
